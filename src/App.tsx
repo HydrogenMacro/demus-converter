@@ -60,7 +60,12 @@ function App() {
                     type="file"
                     accept=".playlist"
                     onChange={async (ev) => {
+                        if (!ev.target.files) {
+                            alert("Error: no file provided")
+                            return;
+                        }
                         const file = ev.target.files[0];
+                        
                         const xzStream = new XzReadableStream(file.stream());
                         let stream = xzStream.pipeThrough(
                             // @ts-ignore
@@ -77,7 +82,7 @@ function App() {
                     }}
                     className="file:p-2 file:bg-amber-200 file:rounded-lg file:border-amber-400 file:border-2"
                 ></input>
-                <h2 className="text-2xl">Or paste its contents here:</h2>
+                <h2 className="text-2xl">Playlist data:</h2>
                 <textarea
                     className="bg-amber-200 border-amber-400 border-2 p-2"
                     rows={10}
@@ -98,9 +103,10 @@ function App() {
                         songs.reduce((acc, song) => acc + song.duration, 0),
                     )}
                 </div>
-                <h2 className="py-4 text-3xl">
+                <h2 className="pt-4 text-3xl">
                     Your generated playlists are here:
                 </h2>
+                <p className="pb-4">Note: Youtube does not support adding anonymous playlists; see the <Link newPage={false} href="#additonal-resources">additional resources</Link> below for options to save.</p>
                 <div className="flex flex-col">
                     {youtubeLinks.map((youtubeLink, i) => (
                         <Link href={youtubeLink}>
@@ -108,6 +114,22 @@ function App() {
                         </Link>
                     ))}
                 </div>
+                <h2 className="py-4 text-3xl">
+                    Youtube links (for yt-dlp):
+                </h2>
+                <textarea
+                    className="bg-amber-200 border-amber-300 border-2 p-2"
+                    rows={10}
+                    value={songs.map((song) => "https://youtu.be/" + song.id).join("\n")}
+                    readOnly
+                ></textarea>
+                <h2 id="additonal-resources" className="py-4 text-3xl">
+                    Additional Resources
+                </h2>
+                <p>
+                    <Link href="https://github.com/yt-dlp/yt-dlp">yt-dlp</Link> - Useful for programatically downloading videos. Look into the --batch-file flag for bulk downloading.<br/>
+                    <Link href="https://github.com/HydrogenMacro/demus-converter/blob/scripts/autodownload.js">autodownload script</Link> - A custom script to paste into devtools for bulk adding to a Youtube playlist on desktop.<br/>                    
+                </p>
             </div>
         </div>
     );
@@ -171,11 +193,11 @@ function SongEntry({ song, row }: { song: Song; row: number }) {
         </div>
     );
 }
-function Link({ href, children }: PropsWithChildren<{ href: string }>) {
+function Link({ href, children, newPage = true }: PropsWithChildren<{ href: string, newPage?: boolean }>) {
     return (
         <a
             href={href}
-            target="_blank"
+            target={newPage ? "_blank" : ""}
             className="underline text-amber-600 hover:text-amber-500"
         >
             {children}
