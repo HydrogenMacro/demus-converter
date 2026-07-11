@@ -4,6 +4,7 @@ import { XzReadableStream } from "xz-decompress";
 
 function App() {
     const [fileText, setFileText] = useState<string>("");
+    const [ytLinkListPrefix, setYtLinkListPrefix] = useState("");
     let playlistData: {
         title: string;
         songs: Song[];
@@ -115,12 +116,21 @@ function App() {
                     ))}
                 </div>
                 <h2 className="py-4 text-3xl">
-                    Youtube links (for yt-dlp):
+                    Youtube links:
                 </h2>
+                <div className="flex gap-2">
+                    <label>Prefix: </label>
+                    <select className="bg-amber-200 border-amber-400 border-2" onChange={(ev) => setYtLinkListPrefix(ev.target.value)}>
+                        <option value={""}>None</option>
+                        <option value={"https://youtu.be"} selected>https://youtu.be</option>
+                        <option value={"https://youtube.com/watch?v="}>https://youtube.com/watch?v=</option>
+                    </select>
+                </div>
+                
                 <textarea
                     className="bg-amber-200 border-amber-300 border-2 p-2"
                     rows={10}
-                    value={songs.map((song) => "https://youtu.be/" + song.id).join("\n")}
+                    value={songs.map((song) => ytLinkListPrefix + song.id).join("\n")}
                     readOnly
                 ></textarea>
                 <h2 id="additonal-resources" className="py-4 text-3xl">
@@ -128,7 +138,9 @@ function App() {
                 </h2>
                 <p>
                     <Link href="https://github.com/yt-dlp/yt-dlp">yt-dlp</Link> - Useful for programatically downloading videos. Look into the --batch-file flag for bulk downloading.<br/>
-                    <Link href="https://github.com/HydrogenMacro/demus-converter/blob/scripts/autodownload.js">autodownload script</Link> - A custom script to paste into devtools for bulk adding to a Youtube playlist on desktop.<br/>                    
+                    <Link href="https://chromewebstore.google.com/detail/multiselect-for-youtube/gpgbiinpmelaihndlegbgfkmnpofgfei?hl=en">Multiselect Extension</Link> - A Chrome extension I found that supports adding videos from text files: just save the list of youtube links without any prefix to a text file and upload it to the extension.<br/>
+                    <Link href="https://github.com/HydrogenMacro/demus-converter/blob/scripts/autodownload.js">autodownload script</Link> - A custom script to paste into devtools for bulk adding to a Youtube playlist on desktop. This is not recommended for use; I made this before I discovered the extension above, which works much better.<br/>
+                    <br/>If none of these options work, then you may have to manually add the videos to your playlist.                 
                 </p>
             </div>
         </div>
