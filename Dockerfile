@@ -6,7 +6,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run builder
+RUN npm run build
 
 FROM joseluisq/static-web-server:2
 EXPOSE 80
