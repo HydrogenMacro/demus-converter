@@ -139,7 +139,7 @@ function App() {
                 <p>
                     <Link href="https://github.com/yt-dlp/yt-dlp">yt-dlp</Link> - Useful for programatically downloading videos. Look into the --batch-file flag for bulk downloading.<br/>
                     <Link href="https://chromewebstore.google.com/detail/multiselect-for-youtube/gpgbiinpmelaihndlegbgfkmnpofgfei?hl=en">Multiselect Extension</Link> - A Chrome extension I found that supports adding videos from text files: just save the list of youtube links without any prefix to a text file and upload it to the extension.<br/>
-                    <Link href="https://github.com/HydrogenMacro/demus-converter/blob/scripts/autodownload.js">autodownload script</Link> - A custom script to paste into devtools for bulk adding to a Youtube playlist on desktop. This is not recommended for use; I made this before I discovered the extension above, which works much better.<br/>
+                    <Link href="https://github.com/HydrogenMacro/demus-converter/blob/main/scripts/autodownload.js">autodownload script</Link> - A custom script to paste into devtools for bulk adding to a Youtube playlist on desktop. This is not recommended for use; I made this before I discovered the extension above, which works much better.<br/>
                     <br/>If none of these options work, then you may have to manually add the videos to your playlist.                 
                 </p>
             </div>
