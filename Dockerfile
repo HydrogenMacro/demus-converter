@@ -10,6 +10,6 @@ RUN npm run build
 
 FROM joseluisq/static-web-server:2
 EXPOSE 80
-COPY --from=builder /app/dist .
+COPY --from=builder /app/dist /app
 
-ENTRYPOINT [ "/static-web-server", "-d", "." ]
+ENTRYPOINT [ "/static-web-server", "--root", "/app"]
